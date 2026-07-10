@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ontology Fuzzy Semantic Crawler</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="background">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="grid"></div>
+    </div>
+
+    <main class="app-shell">
+      <section id="auth-screen" class="auth-screen">
+        <div class="auth-card">
+          <div class="eyebrow">Secure Access</div>
+          <h1 class="auth-title">Ontology-Based Fuzzy Semantic Web Crawler</h1>
+          <p id="auth-subtitle" class="auth-subtitle">
+            Sign in to access the real-time semantic crawler dashboard.
+          </p>
+
+          <div class="auth-tabs">
+            <button id="login-tab" class="auth-tab active" type="button">Login</button>
+            <button id="register-tab" class="auth-tab" type="button">Create Account</button>
+          </div>
+
+          <form id="auth-form" class="auth-form">
+            <label id="name-group" class="hidden" for="name">
+              Full Name
+              <input id="name" name="name" type="text" autocomplete="name" />
+            </label>
+
+            <label for="email">
+              Email
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </label>
+
+            <label for="password">
+              Password
+              <input id="password" name="password" type="password" autocomplete="current-password" required />
+            </label>
+
+            <button id="auth-submit" type="submit">Login</button>
+          </form>
+
+          <p id="auth-message" class="auth-message">
+            If you do not have an account, choose Create Account and register here.
+          </p>
+        </div>
+      </section>
+
+      <section id="dashboard-screen" class="dashboard-screen hidden">
+        <section class="hero">
+          <div class="hero-top">
+            <div>
+              <div class="eyebrow">Real-Time Semantic Retrieval</div>
+              <h1>Ontology-Based Fuzzy Semantic Web Crawler</h1>
+              <p class="subtitle">
+                A live demo that interprets query meaning through ontology mapping, crawls domain-aware pages,
+                and ranks them with fuzzy relevance scoring.
+              </p>
+            </div>
+            <div class="session-box">
+              <span id="welcome-user">Welcome</span>
+              <button id="logout-button" class="secondary-button" type="button">Logout</button>
+            </div>
+          </div>
+
+          <form id="crawl-form" class="query-panel">
+            <label for="query" class="label">Enter a domain-specific query</label>
+            <div class="query-row">
+              <input
+                id="query"
+                name="query"
+                type="text"
+                value="clinical diagnosis and evidence-based patient treatment"
+                autocomplete="off"
+              />
+              <button type="submit">Start Crawl</button>
+            </div>
+            <div class="control-grid">
+              <label for="domain-filter" class="label">
+                Domain
+                <select id="domain-filter" name="domain-filter">
+                  <option value="all">All Domains</option>
+                  <option value="healthcare">Healthcare</option>
+                  <option value="education">Education</option>
+                  <option value="research">Research</option>
+                </select>
+              </label>
+              <label for="threshold-range" class="label">
+                Relevance Threshold
+                <input id="threshold-range" name="threshold-range" type="range" min="0.2" max="0.9" step="0.01" value="0.42" />
+                <span id="threshold-value" class="range-value">0.42</span>
+              </label>
+              <label for="speed-filter" class="label">
+                Stream Speed
+                <select id="speed-filter" name="speed-filter">
+                  <option value="900">Slow</option>
+                  <option value="650" selected>Normal</option>
+                  <option value="300">Fast</option>
+                </select>
+              </label>
+            </div>
+            <div class="suggestions">
+              <button type="button" class="chip" data-query="adaptive classroom learning and student evaluation">
+                Education
+              </button>
+              <button type="button" class="chip" data-query="dataset validation and semantic research methodology">
+                Research
+              </button>
+              <button type="button" class="chip" data-query="patient screening, diagnosis, and personalized therapy">
+                Healthcare
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="stats-row">
+          <article class="stat-card">
+            <span>Total Scanned</span>
+            <strong id="total-scanned">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Accepted</span>
+            <strong id="accepted-count">0</strong>
+          </article>
+          <article class="stat-card">
+            <span>Primary Domain</span>
+            <strong id="primary-domain">-</strong>
+          </article>
+          <article class="stat-card">
+            <span>Top Score</span>
+            <strong id="top-score">0.00</strong>
+          </article>
+        </section>
+
+        <section class="dashboard">
+          <article class="panel">
+            <div class="panel-head">
+              <h2>User Session</h2>
+              <span>Account snapshot</span>
+            </div>
+            <div id="account-summary" class="account-summary empty-state">
+              Account details will appear here after login.
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Crawl History</h2>
+              <span>Recent queries</span>
+            </div>
+            <div id="history-list" class="result-list empty-state">
+              Your previous crawl sessions will appear here.
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Ontology Interpretation</h2>
+              <span id="crawl-status" class="status-pill idle">Idle</span>
+            </div>
+            <div id="ontology-summary" class="ontology-summary empty-state">
+              Submit a query to see semantic mapping.
+            </div>
+            <div id="ontology-matches" class="tag-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Live Crawl Stream</h2>
+              <span id="crawl-progress">0 / 0</span>
+            </div>
+            <div id="crawl-stream" class="stream-list empty-state">
+              Crawl activity will appear here in real time.
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Knowledge Base</h2>
+              <span>Accepted Pages</span>
+            </div>
+            <div id="knowledge-base" class="result-list empty-state">
+              Accepted semantic pages will be stored here.
+            </div>
+          </article>
+
+          <article class="panel panel-wide">
+            <div class="panel-head">
+              <h2>Ranked Results</h2>
+              <span>Semantic similarity + fuzzy evaluation</span>
+            </div>
+            <div id="ranked-results" class="result-list empty-state">
+              Ranked pages will appear after the crawl completes.
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

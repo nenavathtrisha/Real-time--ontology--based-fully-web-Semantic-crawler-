@@ -1,0 +1,9 @@
+{
+  "name": "ontology-fuzzy-semantic-crawler",
+  "version": "1.0.0",
+  "description": "Real-time ontology-based fuzzy semantic web crawler demo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

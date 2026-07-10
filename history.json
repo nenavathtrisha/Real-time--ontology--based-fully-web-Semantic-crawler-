@@ -1,0 +1,13 @@
+[
+  {
+    "id": "8397f9e0-753f-4edb-bdab-800e0c066274",
+    "userId": "b95233e8-a3ae-446d-bafe-4a20bd31c9ba",
+    "query": "patient screening therapy",
+    "domain": "healthcare",
+    "threshold": 0.4,
+    "topScore": 0.74,
+    "accepted": 2,
+    "scanned": 2,
+    "createdAt": "2026-05-01T13:30:06.148Z"
+  }
+]
