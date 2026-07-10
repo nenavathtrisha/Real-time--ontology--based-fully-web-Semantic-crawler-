@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Clinical Data</p>
+        <h2>Medical records and prescriptions</h2>
+    </div>
+    {% if g.user['role'] == 'patient' %}
+    <a class="button" href="{{ url_for('download_patient_report', patient_id=g.user['patient_id']) }}">Download my report</a>
+    {% endif %}
+</section>
+
+<section class="grid two">
+    <article class="panel">
+        <h3>Medical records</h3>
+        <div class="stack">
+            {% for record in medical_records %}
+            <div class="record-card">
+                <div class="record-head">
+                    <strong>{{ record['record_date'] }}</strong>
+                    <span class="pill">Appointment #{{ record['appointment_id'] or 'NA' }}</span>
+                </div>
+                <p><strong>Patient:</strong> {{ record['patient_name'] }}</p>
+                <p><strong>Doctor:</strong> {{ record['doctor_name'] }}</p>
+                <p><strong>Diagnosis:</strong> {{ record['diagnosis'] }}</p>
+                <p><strong>Vitals:</strong> {{ record['vitals'] or 'Not recorded' }}</p>
+                <p><strong>Treatment:</strong> {{ record['treatment_notes'] }}</p>
+            </div>
+            {% else %}
+            <p class="muted">No medical records available.</p>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="panel">
+        <h3>Prescriptions</h3>
+        <div class="stack">
+            {% for prescription in prescriptions %}
+            <div class="record-card">
+                <div class="record-head">
+                    <strong>{{ prescription['issued_on'] }}</strong>
+                    <span class="pill">Rx #{{ prescription['prescription_id'] }}</span>
+                </div>
+                {% if prescription['patient_name'] is defined %}
+                <p><strong>Patient:</strong> {{ prescription['patient_name'] }}</p>
+                {% endif %}
+                {% if prescription['doctor_name'] is defined %}
+                <p><strong>Doctor:</strong> {{ prescription['doctor_name'] }}</p>
+                {% endif %}
+                <p><strong>Medicines:</strong> {{ prescription['medicines'] }}</p>
+                <p><strong>Instructions:</strong> {{ prescription['instructions'] }}</p>
+            </div>
+            {% else %}
+            <p class="muted">No prescriptions available.</p>
+            {% endfor %}
+        </div>
+    </article>
+</section>
+{% endblock %}

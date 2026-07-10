@@ -1,33 +1,42 @@
-# Real-Time Ontology-Based Fully Semantic Web Crawler
+# Smart Healthcare Appointment and Telemedicine System
 
-## Overview
+This project is a database-driven web application for managing patients, doctors, appointments, prescriptions, payments, and medical records for a telemedicine workflow.
 
-A semantic web crawler that collects and analyzes web content in real time using ontology-based knowledge representation. It understands the meaning of data rather than relying only on keywords, providing more accurate and relevant search results.
+## Tech stack
+
+- Flask web framework
+- SQLite relational database
+- Normalized schema with primary keys, foreign keys, constraints, and indexes
+- Role-based login for `admin`, `receptionist`, `doctor`, and `patient`
 
 ## Features
 
-* Real-time web crawling
-* Ontology-based semantic analysis
-* Intelligent content classification
-* Metadata extraction
-* Knowledge graph generation
-* Semantic search and retrieval
+- Patient, doctor, appointment, prescription, payment, and medical record tables
+- ACID-aware appointment booking flow using a transaction and duplicate-slot validation
+- Doctor availability tracking
+- Payment records created automatically for each booking
+- Role-aware dashboards and access controls
+- Query-friendly analytics views for admins and reception staff
 
-## Technologies Used
+## How to run
 
-* Python
-* RDF
-* OWL
-* SPARQL
-* NLP
-* Semantic Web Technologies
+1. Install dependencies:
 
-## Applications
+```bash
+pip install -r requirements.txt
+```
 
-* Semantic Search Engines
-* Knowledge Management Systems
-* Research and Data Mining
-* Information Retrieval Systems
+2. Start the app:
 
+```bash
+python app.py
+```
 
+3. Open the local URL shown by Flask, usually `http://127.0.0.1:5000`.
 
+## Demo logins
+
+- `admin` / `admin123`
+- `reception` / `reception123`
+- `aarav` / `patient123`
+- `drpriya` / `doctor123`

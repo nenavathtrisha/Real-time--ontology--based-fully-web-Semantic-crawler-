@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Appointments</p>
+        <h2>Booking and billing workflow</h2>
+    </div>
+</section>
+
+<section class="grid two">
+    <article class="panel">
+        <h3>Book appointment</h3>
+        <form method="post" class="form-card">
+            <label>Patient
+                <select name="patient_id" required {% if g.user['role'] == 'patient' %}disabled{% endif %}>
+                    {% for patient in patients %}
+                    <option value="{{ patient['patient_id'] }}" {% if g.user['role'] == 'patient' and g.user['patient_id'] == patient['patient_id'] %}selected{% endif %}>
+                        {{ patient['full_name'] }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </label>
+            {% if g.user['role'] == 'patient' %}
+            <input type="hidden" name="patient_id" value="{{ g.user['patient_id'] }}">
+            {% endif %}
+
+            <label>Doctor
+                <select name="doctor_id" required>
+                    {% for doctor in doctors %}
+                    <option value="{{ doctor['doctor_id'] }}">
+                        {{ doctor['full_name'] }} - {{ doctor['specialization'] }} (Rs. {{ "%.2f"|format(doctor['consultation_fee']) }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>Date
+                <input type="date" name="appointment_date" required>
+            </label>
+            <label>Time
+                <input type="time" name="appointment_time" required>
+            </label>
+            <label>Consultation type
+                <select name="consultation_type" required>
+                    <option value="Online">Online</option>
+                    <option value="Offline">Offline</option>
+                </select>
+            </label>
+            <label>Payment method
+                <select name="payment_method" required>
+                    <option value="UPI">UPI</option>
+                    <option value="Card">Card</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Net Banking">Net Banking</option>
+                </select>
+            </label>
+            <label>Reason
+                <textarea name="reason" rows="4" required placeholder="Describe symptoms or consultation purpose"></textarea>
+            </label>
+            <button class="button" type="submit">Book securely</button>
+        </form>
+    </article>
+
+    <article class="panel">
+        <h3>Recent payments</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Appointment</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                    <td>#{{ payment['appointment_id'] }}</td>
+                    <td>{{ payment['patient_name'] }}</td>
+                    <td>{{ payment['doctor_name'] }}</td>
+                    <td>Rs. {{ "%.2f"|format(payment['amount']) }}</td>
+                    <td><span class="pill">{{ format_payment_status(payment['payment_status'], payment['booked_on'], payment['paid_on']) }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </article>
+</section>
+
+<section class="panel">
+    <h3>Appointment log</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Mode</th>
+                <th>Status</th>
+                <th>Reason</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>#{{ appointment['appointment_id'] }}</td>
+                <td>{{ appointment['patient_name'] }}</td>
+                <td>{{ appointment['doctor_name'] }}<br><span class="muted">{{ appointment['specialization'] }}</span></td>
+                <td>{{ appointment['appointment_date'] }} {{ appointment['appointment_time'] }}</td>
+                <td>{{ appointment['consultation_type'] }}</td>
+                <td><span class="pill">{{ format_appointment_status(appointment['status']) }}</span></td>
+                <td>{{ appointment['reason'] }}</td>
+                <td><a class="button ghost small" href="{{ url_for('appointment_detail', appointment_id=appointment['appointment_id']) }}">View doctor & medicine</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

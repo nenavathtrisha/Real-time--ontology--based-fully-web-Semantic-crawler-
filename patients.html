@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Patients</p>
+        <h2>Patient registry</h2>
+    </div>
+</section>
+
+<section class="panel">
+    <table>
+        <thead>
+            <tr>
+                <th>Patient ID</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Blood Group</th>
+                <th>Appointments</th>
+                <th>Last Visit</th>
+                <th>Report</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>#{{ patient['patient_id'] }}</td>
+                <td>{{ patient['full_name'] }}</td>
+                <td>{{ patient['email'] }}<br>{{ patient['phone'] }}</td>
+                <td>{{ patient['blood_group'] or "-" }}</td>
+                <td>{{ patient['appointment_count'] }}</td>
+                <td>{{ patient['last_visit'] or "-" }}</td>
+                <td><a class="button ghost small" href="{{ url_for('download_patient_report', patient_id=patient['patient_id']) }}">Download</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
